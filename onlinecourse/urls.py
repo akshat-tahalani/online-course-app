@@ -10,4 +10,5 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('course/<int:course_id>/', views.course_details, name='course_details'),
     path('course/<int:course_id>/enroll/', views.enroll, name='enroll'),
+    path('course/<int:course_id>/submit/', views.submit, name='submit'),
 ]

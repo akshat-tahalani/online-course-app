@@ -8,10 +8,11 @@
             <div class="card-body">
                 <h5 class="card-title">{{ course.name }}</h5>
                 <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                <a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">View</a>
                 {% if course.is_enrolled %}
                     <span class="badge badge-success">Enrolled</span>
-                {% else %}
-                    <a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">View</a>
+                
+                
                 {% endif %}
             </div>
         </div>

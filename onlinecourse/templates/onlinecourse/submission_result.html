@@ -1,0 +1,56 @@
+{% extends 'onlinecourse/base_bootstrap.html' %}
+{% block content %}
+<div class="container mt-5">
+    {% if is_passed %}
+    <div class="alert alert-success">
+        <h3>Congratulations, {{ user_name }}! You have passed the exam and completed the course with score {{ score }}/{{ max_score }}</h3>
+    </div>
+    {% else %}
+    <div class="alert alert-danger">
+        <h3>Sorry, {{ user_name }}! You have failed the exam with score {{ score }}/{{ max_score }}</h3>
+    </div>
+    {% endif %}
+
+    <h4 class="mt-4">Answer Review</h4>
+    {% for question in question_results %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>{{ question.content }}</h5>
+            <small class="text-muted">Points: {{ question.grade }}</small>
+        </div>
+        <div class="card-body">
+            {% for choice in question.choices %}
+            <div class="form-check p-2 rounded mb-2" style="
+                {% if choice.status == 'correct' %}
+                background-color: #d4edda; border-left: 4px solid #28a745;
+                {% elif choice.status == 'wrong' %}
+                background-color: #f8d7da; border-left: 4px solid #dc3545;
+                {% elif choice.status == 'not_selected' %}
+                background-color: #fff3cd; border-left: 4px solid #ffc107;
+                {% else %}
+                background-color: #f5f5f5; border-left: 4px solid #ccc;
+                {% endif %}
+            ">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" disabled
+                        {% if choice.selected %}checked{% endif %}>
+                    {{ choice.content }}
+                    {% if choice.status == 'correct' %}
+                    <span class="badge bg-success ms-2">Correct</span>
+                    {% elif choice.status == 'wrong' %}
+                    <span class="badge bg-danger ms-2">Wrong</span>
+                    {% elif choice.status == 'not_selected' %}
+                    <span class="badge bg-warning ms-2">Correct (Not Selected)</span>
+                    {% endif %}
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="mt-4">
+        <a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">Back to Course</a>
+    </div>
+</div>
+{% endblock %}
