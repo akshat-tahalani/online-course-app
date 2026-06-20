@@ -90,10 +90,21 @@ def submit(request, course_id):
     selected_choices = Choice.objects.filter(id__in=selected_ids)
     submission.choices.set(selected_choices)
     
+    # Redirect to show results
+    return redirect('onlinecourse:show_exam_result', submission_id=submission.id)
+
+
+def show_exam_result(request, submission_id):
+    submission = get_object_or_404(Submission, pk=submission_id)
+    course = submission.enrollment.course
+    user = submission.enrollment.user
+    
     # Calculate score and build question breakdown
     score = 0
     questions = course.question_set.all()
     question_results = []
+    
+    selected_choices = submission.choices.all()
     
     for question in questions:
         question_selected_ids = [choice.id for choice in selected_choices if choice.question == question]
