@@ -1,0 +1,19 @@
+{% extends 'onlinecourse/base_bootstrap.html' %}
+{% block content %}
+<h2>{{ course.name }}</h2>
+<p>{{ course.description }}</p>
+
+{% if user.is_authenticated and not course.is_enrolled %}
+<a class="btn btn-success" href="{% url 'onlinecourse:enroll' course.id %}">Enroll</a>
+{% endif %}
+
+<h4 class="mt-4">Lessons</h4>
+<ul class="list-group">
+    {% for lesson in course.lesson_set.all %}
+    <li class="list-group-item">{{ lesson.title }}</li>
+    {% endfor %}
+</ul>
+
+<!-- TASK 3 EXAM SECTION WILL GO HERE -->
+
+{% endblock %}

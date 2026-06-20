@@ -1,0 +1,17 @@
+{% extends 'onlinecourse/base_bootstrap.html' %}
+{% block content %}
+<h2>Available Courses</h2>
+<div class="row">
+    {% for course in course_list %}
+    <div class="col-md-4 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ course.name }}</h5>
+                <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                <a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">View</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
